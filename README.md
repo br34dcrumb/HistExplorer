@@ -1,4 +1,4 @@
-# HistExplorer
+# HistExplorer - Browser History Viewer
 
 A client-side SQLite database viewer built for browsing browser history files — or any SQLite database. No server, no uploads. Everything runs in your browser.
 
