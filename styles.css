@@ -1,0 +1,416 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Scrollbars ─── */
+::-webkit-scrollbar {
+  width: 13px;
+  height: 13px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+  border-left: 1px solid #3c3c3c;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #424242;
+  border: 4px solid #1e1e1e;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5a5a5a;
+}
+
+::-webkit-scrollbar-corner {
+  background: #1e1e1e;
+}
+
+/* ─── Base ─── */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── View transitions ─── */
+.view-active {
+  display: flex !important;
+}
+
+.view-hidden {
+  display: none !important;
+}
+
+/* ─── Data Table ─── */
+table {
+  table-layout: fixed;
+}
+
+th,
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+th {
+  padding: 4px 8px;
+  font-weight: normal !important;
+  color: #cccccc;
+  border-right: 1px solid #3c3c3c;
+  border-bottom: 2px solid #3c3c3c;
+  background-color: #2d2d2d;
+}
+
+td {
+  padding: 3px 8px;
+  border-right: 1px solid #3c3c3c;
+  border-bottom: 1px solid #2c2c2c;
+}
+
+tbody tr {
+  background-color: #1e1e1e;
+}
+
+tbody tr:hover {
+  background-color: #2a2d2e;
+}
+
+tbody tr.selected {
+  background-color: #04395e !important;
+  color: white;
+}
+
+/* ─── Row number column ─── */
+td:first-child,
+th:first-child {
+  background-color: #252526;
+  color: #858585;
+  text-align: right;
+  padding-right: 8px;
+  user-select: none;
+  font-size: 11px;
+}
+
+/* ─── NULL cells ─── */
+.cell-null {
+  color: #6b7b8d;
+  font-style: italic;
+  font-size: 11px;
+}
+
+/* ─── BLOB cells ─── */
+.cell-blob {
+  color: #c678dd;
+  font-style: italic;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* ─── Search Highlight ─── */
+.highlight {
+  background-color: rgba(97, 175, 239, 0.3);
+  color: #61afef;
+  border-radius: 2px;
+}
+
+/* ─── Column type badges ─── */
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 600;
+  font-family: monospace;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.type-badge-text {
+  background: rgba(97, 175, 239, 0.15);
+  color: #61afef;
+}
+
+.type-badge-int {
+  background: rgba(152, 195, 121, 0.15);
+  color: #98c379;
+}
+
+.type-badge-real {
+  background: rgba(229, 192, 123, 0.15);
+  color: #e5c07b;
+}
+
+.type-badge-blob {
+  background: rgba(198, 120, 221, 0.15);
+  color: #c678dd;
+}
+
+.type-badge-unknown {
+  background: rgba(150, 150, 150, 0.15);
+  color: #858585;
+}
+
+/* ─── Pinned Columns ─── */
+/* position + left + z-index are set inline by JS (updatePinnedColumns) */
+/* These rules only apply background so cells are opaque when sticky */
+th.pinned-col {
+  background-color: #2d2d2d;
+}
+
+td.pinned-col {
+  background-color: #1e1e1e;
+  border-right: 1px solid #505050;
+}
+
+tbody tr:hover td.pinned-col {
+  background-color: #2a2d2e;
+}
+
+tbody tr.selected td.pinned-col {
+  background-color: #04395e;
+}
+
+/* ─── Column resizer ─── */
+.resizer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  cursor: col-resize;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+th:hover .resizer,
+.resizer.resizing {
+  opacity: 1;
+  background-color: #61afef;
+}
+
+/* ─── SQL Editor (CodeMirror) ─── */
+/* Hide the original textarea */
+.sql-editor {
+  display: none !important;
+}
+
+/* Panel flex layout */
+#sql-editor-panel .CodeMirror {
+  flex: 1;
+  height: 100%;
+  min-height: 0;
+}
+
+/* ── hist-ide theme: matches the site One-Dark palette ── */
+.cm-s-hist-ide.CodeMirror {
+  font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  background: #1e1e1e;
+  color: #cccccc;
+  border: none;
+}
+
+.cm-s-hist-ide .CodeMirror-gutters {
+  background: #252526;
+  border-right: 1px solid #3c3c3c;
+}
+
+.cm-s-hist-ide .CodeMirror-linenumber {
+  color: #585858;
+  padding: 0 8px 0 4px;
+}
+
+.cm-s-hist-ide .CodeMirror-cursor {
+  border-left: 2px solid #61afef;
+}
+
+.cm-s-hist-ide div.CodeMirror-selected {
+  background: #264f78;
+}
+
+.cm-s-hist-ide .CodeMirror-activeline-background {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cm-s-hist-ide .CodeMirror-matchingbracket {
+  color: #e5c07b !important;
+  background: rgba(229, 192, 123, 0.12);
+  border-bottom: 1px solid #e5c07b;
+}
+
+/* ── Token colours ── */
+.cm-s-hist-ide .cm-keyword {
+  color: #c678dd;
+}
+
+/* idePurple — SELECT FROM WHERE JOIN */
+.cm-s-hist-ide .cm-builtin {
+  color: #61afef;
+}
+
+/* ideBlue   — COUNT SUM MAX datetime */
+.cm-s-hist-ide .cm-atom {
+  color: #e5c07b;
+}
+
+/* ideYellow — NULL TRUE FALSE */
+.cm-s-hist-ide .cm-number {
+  color: #e5c07b;
+}
+
+/* ideYellow — numeric literals */
+.cm-s-hist-ide .cm-string,
+.cm-s-hist-ide .cm-string-2 {
+  color: #98c379;
+}
+
+/* ideGreen  — 'string literals' */
+.cm-s-hist-ide .cm-comment {
+  color: #5c6370;
+  font-style: italic;
+}
+
+/* muted — -- comments */
+.cm-s-hist-ide .cm-variable {
+  color: #cccccc;
+}
+
+/* ideText   — column/table names */
+.cm-s-hist-ide .cm-variable-2 {
+  color: #e06c75;
+}
+
+/* ideRed    — aliases */
+.cm-s-hist-ide .cm-operator {
+  color: #abb2bf;
+}
+
+/* light grey — = < > AND OR */
+.cm-s-hist-ide .cm-def,
+.cm-s-hist-ide .cm-property {
+  color: #61afef;
+}
+
+/* ideBlue */
+.cm-s-hist-ide .cm-meta,
+.cm-s-hist-ide .cm-qualifier {
+  color: #858585;
+}
+
+/* Drag handle at top of SQL editor panel */
+.sql-resize-handle {
+  height: 5px;
+  background: transparent;
+  cursor: ns-resize;
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+}
+
+.sql-resize-handle:hover,
+.sql-resize-handle:active {
+  background-color: #61afef;
+}
+
+/* ─── Pagination buttons ─── */
+.pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  color: #858585;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.1s, background-color 0.1s;
+}
+
+.pagination-btn:hover {
+  color: #cccccc;
+  background-color: #37373d;
+}
+
+/* ─── Schema tree items ─── */
+#schema-tree .schema-col-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 32px;
+  font-size: 12px;
+  color: #858585;
+  cursor: default;
+}
+
+/* ─── Inputs ─── */
+input[type="text"],
+select {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ─── SQL Preset Buttons ─── */
+.sql-preset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  font-size: 11px;
+  color: #858585;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.1s, border-color 0.1s, background-color 0.1s;
+  white-space: nowrap;
+}
+
+.sql-preset-btn:hover {
+  color: #cccccc;
+  border-color: #454545;
+  background-color: #2a2d2e;
+}
+
+/* ─── Cell Truncation Layout ─── */
+/* Wrapper fills the td and hides overflow so CSS ellipsis works */
+.truncate-cell-wrapper {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+/* The text itself also truncates */
+.cell-text-truncate {
+  display: inline;
+  /* stays inline so ellipsis applies to the wrapper */
+}
+
+/* Copy button: absolutely positioned, shows on row hover */
+.cell-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #585858;
+  opacity: 0;
+  transition: opacity 0.1s;
+  cursor: pointer;
+  background: #1e1e1e;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+tr:hover .cell-copy-btn {
+  opacity: 1;
+}
+
+.cell-copy-btn:hover {
+  color: #e5c07b;
+}
